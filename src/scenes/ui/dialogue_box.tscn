@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ui/dialogue_bg.png" id="1_bg"]
+[ext_resource type="Font" path="res://assets/fonts/dialogue_font.tres" id="2_font"]
+[ext_resource type="Script" path="res://src/scripts/ui/dialogue_box.gd" id="3_script"]
+
+[node name="DialogueBox" type="Panel"]
+script = ExtResource("3_script")
+texture = ExtResource("1_bg")
+size = Vector2(800, 200)
+position = Vector2(176, 448)
+
+[node name="Label" type="Label" parent="."]
+position = Vector2(40, 40)
+size = Vector2(720, 120)
+text = "对话内容"
+font = ExtResource("2_font")
+font_size = 24
+
+[node name="NextIcon" type="TextureRect" parent="."]
+position = Vector2(740, 160)
+texture = preload("res://assets/ui/next_arrow.png")

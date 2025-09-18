@@ -1,0 +1,23 @@
+Boss场景完整配置指南：
+
+1. 节点结构：
+- CharacterBody2D (根节点，命名为Boss)
+  - CollisionShape2D (碰撞检测)
+  - ColorRect (视觉表现，红色)
+  - ProgressBar (血条UI)
+
+2. Boss脚本(boss.gd)关键功能：
+- 多阶段战斗状态机
+- 特殊攻击模式
+- 弱点系统
+- 死亡动画
+
+3. 场景参数：
+- 初始位置: Vector2(500, 300)
+- 碰撞形状大小: Vector2(120, 180)
+- 初始生命值: 500
+
+4. 后续扩展点：
+- 添加纹理替换ColorRect
+- 实现Boss特殊技能
+- 添加音效和粒子效果

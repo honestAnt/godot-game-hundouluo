@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/scripts/ui/transition.gd" id="1_abc12"]
+[ext_resource type="StyleBox" path="res://assets/styles/progress_bar.tres" id="2_def34"]
+
+[node name="Transition" type="CanvasLayer"]
+script = ExtResource("1_abc12")
+layer = 128
+
+[node name="ColorRect" type="ColorRect" parent="."]
+color = Color(0, 0, 0, 0.7)
+size = Vector2(1152, 648)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+position = Vector2(376, 324)
+size = Vector2(400, 20)
+value = 0
+visible = false
+custom_styles_fg = ExtResource("2_def34")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "fade_in"

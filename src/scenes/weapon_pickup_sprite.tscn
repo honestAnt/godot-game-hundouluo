@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[node name="WeaponPickupSprite" type="Node2D"]
+
+[node name="MachineGun" type="Polygon2D" parent="."]
+visible = false
+color = Color(1, 1, 0, 1)
+polygon = PackedVector2Array(-10, -5, 10, -5, 10, 5, -10, 5)
+
+[node name="Barrel" type="Polygon2D" parent="MachineGun"]
+position = Vector2(12, 0)
+color = Color(0.8, 0.8, 0, 1)
+polygon = PackedVector2Array(-2, -2, 5, -2, 5, 2, -2, 2)
+
+[node name="SpreadGun" type="Polygon2D" parent="."]
+visible = false
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(-10, -5, 10, -5, 10, 5, -10, 5)
+
+[node name="Barrel" type="Polygon2D" parent="SpreadGun"]
+position = Vector2(12, 0)
+color = Color(0, 0.8, 0, 1)
+polygon = PackedVector2Array(-2, -4, 5, -4, 5, 4, -2, 4)
+
+[node name="LaserGun" type="Polygon2D" parent="."]
+visible = false
+color = Color(0, 1, 1, 1)
+polygon = PackedVector2Array(-10, -5, 10, -5, 10, 5, -10, 5)
+
+[node name="Barrel" type="Polygon2D" parent="LaserGun"]
+position = Vector2(12, 0)
+color = Color(0, 0.8, 0.8, 1)
+polygon = PackedVector2Array(-2, -2, 8, -2, 8, 2, -2, 2)

@@ -1,0 +1,6 @@
+[gd_resource type="AnimationLibrary" format=3]
+
+[resource]
+fade_in = SubResource("Animation_1")
+fade_out = SubResource("Animation_2")
+show_level_info = SubResource("Animation_3")

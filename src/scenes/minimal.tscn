@@ -1,0 +1,162 @@
+[gd_scene load_steps=9 format=3 uid="uid://bksf4v8ygi5vm"]
+
+[ext_resource type="Script" uid="uid://dpj7m63tcraj7" path="res://src/scripts/player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://w05iq4td5aqh" path="res://src/scripts/enemy.gd" id="2_enemy"]
+[ext_resource type="Script" uid="uid://dyexel0cpsdhc" path="res://src/scripts/weapon_pickup.gd" id="3_weapon"]
+[ext_resource type="PackedScene" uid="uid://x7t5yk6cylxc" path="res://src/scenes/boss.tscn" id="4_uomhs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(800, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_weapon"]
+size = Vector2(30, 30)
+
+[node name="Minimal" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(100, 300)
+script = ExtResource("1_player")
+
+[node name="PlayerSprite" type="Node2D" parent="Player"]
+
+[node name="Body" type="Polygon2D" parent="Player/PlayerSprite"]
+color = Color(0, 0.6, 1, 1)
+polygon = PackedVector2Array(-10, -20, 10, -20, 10, 20, -10, 20)
+
+[node name="Head" type="Polygon2D" parent="Player/PlayerSprite"]
+position = Vector2(0, -25)
+color = Color(0.8, 0.8, 0.8, 1)
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[node name="Gun" type="Polygon2D" parent="Player/PlayerSprite"]
+position = Vector2(15, 0)
+color = Color(0.3, 0.3, 0.3, 1)
+polygon = PackedVector2Array(-5, -3, 10, -3, 10, 3, -5, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_player")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(400, 500)
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_left = -400.0
+offset_top = -20.0
+offset_right = 400.0
+offset_bottom = 20.0
+color = Color(0.2, 0.7, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(600, 350)
+
+[node name="ColorRect" type="ColorRect" parent="Platform1"]
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+color = Color(0.2, 0.7, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1"]
+scale = Vector2(0.25, 1)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Enemy" type="CharacterBody2D" parent="."]
+position = Vector2(600, 300)
+script = ExtResource("2_enemy")
+
+[node name="EnemySprite" type="Node2D" parent="Enemy"]
+
+[node name="Body" type="Polygon2D" parent="Enemy/EnemySprite"]
+color = Color(1, 0.2, 0.2, 1)
+polygon = PackedVector2Array(-10, -20, 10, -20, 10, 20, -10, 20)
+
+[node name="Head" type="Polygon2D" parent="Enemy/EnemySprite"]
+position = Vector2(0, -25)
+color = Color(0.7, 0.2, 0.2, 1)
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[node name="Gun" type="Polygon2D" parent="Enemy/EnemySprite"]
+position = Vector2(15, 0)
+color = Color(0.3, 0.3, 0.3, 1)
+polygon = PackedVector2Array(-5, -3, 10, -3, 10, 3, -5, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_enemy")
+
+[node name="FloorChecker" type="RayCast2D" parent="Enemy"]
+position = Vector2(-20, 0)
+target_position = Vector2(0, 100)
+
+[node name="WeaponPickup" type="Area2D" parent="."]
+position = Vector2(400, 300)
+script = ExtResource("3_weapon")
+
+[node name="WeaponSprite" type="Node2D" parent="WeaponPickup"]
+
+[node name="SpreadGun" type="Polygon2D" parent="WeaponPickup/WeaponSprite"]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(-10, -5, 10, -5, 10, 5, -10, 5)
+
+[node name="Barrel" type="Polygon2D" parent="WeaponPickup/WeaponSprite/SpreadGun"]
+position = Vector2(12, 0)
+color = Color(0, 0.8, 0, 1)
+polygon = PackedVector2Array(-2, -4, 5, -4, 5, 4, -2, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPickup"]
+shape = SubResource("RectangleShape2D_weapon")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 46.0
+text = "生命值: 5"
+
+[node name="WeaponLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 76.0
+text = "武器: 机枪"
+
+[node name="ControlsPanel" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 250.0
+
+[node name="ControlsLabel" type="Label" parent="UI/ControlsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "控制说明:
+← → : 左右移动
+空格键: 跳跃
+Ctrl键: 射击
+Tab键: 切换武器
+↑↓ + 方向键: 8方向射击"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("4_uomhs")]

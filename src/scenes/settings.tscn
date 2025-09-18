@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/scripts/settings.gd" id="1_abc12"]
+
+[node name="Settings" type="Panel"]
+script = ExtResource("1_abc12")
+size = Vector2(400, 300)
+
+[node name="VolumeSlider" type="HSlider" parent="."]
+position = Vector2(100, 50)
+size = Vector2(200, 20)
+min_value = 0
+max_value = 100
+value = 80
+
+[node name="BackButton" type="Button" parent="."]
+text = "返回"
+position = Vector2(150, 250)
+size = Vector2(100, 40)
+
+[connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]
