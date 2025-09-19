@@ -1,0 +1,49 @@
+[gd_resource type="SpriteFrames" format=2]
+
+[resource]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "attack",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "die",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "jump",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "ground_pound",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "special_attack",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "laser_charge",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": false,
+"name": "laser_fire",
+"speed": 10.0
+} ]

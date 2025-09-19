@@ -1,10 +1,9 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource type="Texture2D" path="res://assets/ui/button_bg.png" id="1_bg"]
-[ext_resource type="Script" path="res://src/scripts/ui/choice_button.gd" id="2_script"]
+[ext_resource path="res://src/scripts/ui/choice_button.gd" type="Script" id=1]
 
 [node name="ChoiceButton" type="Button"]
-script = ExtResource("2_script")
-text = "选择项"
-custom_minimum_size = Vector2(200, 40)
-icon = ExtResource("1_bg")
+margin_right = 360.0
+margin_bottom = 40.0
+text = "选项"
+script = ExtResource( 1 )

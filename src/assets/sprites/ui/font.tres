@@ -1,0 +1,9 @@
+[gd_resource type="DynamicFont" format=2]
+
+[resource]
+font_data = ExtResource( 1 )
+size = 16
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+
+[ext_resource path="res://src/assets/fonts/default_font.ttf" type="DynamicFontData" id=1]

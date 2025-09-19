@@ -1,39 +1,77 @@
 extends Panel
 
 signal dialogue_finished
+signal dialogue_next
 
-var current_text = ""
-var typing_speed = 0.05
+var dialogue_lines = []
+var current_line = 0
 var is_typing = false
-var character_avatars = {
-    "player": preload("res://assets/avatars/player.png"),
-    "npc": preload("res://assets/avatars/npc.png")
-}
 
-@onready var audio_player = $AudioStreamPlayer
+onready var dialogue_text = $MarginContainer/VBoxContainer/DialogueText
+onready var continue_button = $MarginContainer/VBoxContainer/HBoxContainer/ContinueButton
+onready var animation_player = $MarginContainer/VBoxContainer/DialogueText/AnimationPlayer
 
-func show_dialogue(text, character="player"):
-    $Avatar.texture = character_avatars.get(character, null)
-    current_text = text
-    show()
-    $Label.text = ""
-    is_typing = true
-    for i in range(text.length()):
-        $Label.text += text[i]
-        _on_character_typed()
-        await get_tree().create_timer(typing_speed).timeout
-    is_typing = false
+func _ready():
+    # 初始化时隐藏对话框
+    visible = false
+    
+    # 连接按钮信号
+    continue_button.connect("pressed", self, "_on_continue_pressed")
+    
+    # 连接动画完成信号
+    animation_player.connect("animation_finished", self, "_on_animation_finished")
 
-func _on_character_typed():
-    audio_player.pitch_scale = randf_range(0.9, 1.1)
-    audio_player.play()
+func show_dialogue(lines):
+    # 设置对话内容
+    dialogue_lines = lines
+    current_line = 0
+    
+    # 显示对话框
+    visible = true
+    
+    # 显示第一行对话
+    _show_next_line()
+
+func _show_next_line():
+    if current_line < dialogue_lines.size():
+        # 获取当前行文本
+        var line = dialogue_lines[current_line]
+        
+        # 设置文本内容
+        dialogue_text.bbcode_text = line
+        dialogue_text.percent_visible = 0
+        
+        # 播放文本显示动画
+        is_typing = true
+        animation_player.play("text_reveal")
+        
+        # 发送下一行对话信号
+        emit_signal("dialogue_next", current_line)
+        
+        # 增加行计数
+        current_line += 1
+    else:
+        # 所有对话显示完毕
+        visible = false
+        emit_signal("dialogue_finished")
+
+func _on_continue_pressed():
+    if is_typing:
+        # 如果正在打字，则立即显示全部文本
+        dialogue_text.percent_visible = 1.0
+        animation_player.stop()
+        is_typing = false
+    else:
+        # 否则显示下一行对话
+        _show_next_line()
+
+func _on_animation_finished(anim_name):
+    if anim_name == "text_reveal":
+        is_typing = false
 
 func _input(event):
-    if event.is_action_pressed("ui_accept"):
-        if is_typing:
-            # 快速完成当前打字效果
-            $Label.text = current_text
-            is_typing = false
-        else:
-            emit_signal("dialogue_finished")
-            hide()
+    # 按空格键或回车键继续对话
+    if visible and event is InputEventKey and event.pressed:
+        if event.scancode == KEY_SPACE or event.scancode == KEY_ENTER:
+            _on_continue_pressed()
+            get_tree().set_input_as_handled()

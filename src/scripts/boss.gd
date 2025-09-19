@@ -1,71 +1,107 @@
-extends CharacterBody2D
+extends "res://src/scripts/enemy.gd"
 
-enum BOSS_STATE {
-    NORMAL,
-    RAGE,
-    DESPERATE
-}
+# Boss脚本，继承自敌人基类
 
-var current_state = BOSS_STATE.NORMAL
-var attack_cooldown := 1.5
+# Boss阶段
+enum BossPhase { PHASE1, PHASE2, PHASE3 }
+var current_phase = BossPhase.PHASE1
+var phase_health_thresholds = [0.7, 0.4, 0.1]  # 70%, 40%, 10%的血量进入下一阶段
 
-@onready var health = $Health
-@onready var attack_timer = $AttackTimer
-@onready var explosion_timer = $ExplosionTimer
+# Boss特殊攻击参数
+export var special_attack_cooldown = 5.0
+var can_special_attack = true
+var attack_patterns = []
+var current_attack_pattern = 0
+
+# 节点引用
+onready var special_attack_timer = $SpecialAttackTimer
+onready var phase_transition_timer = $PhaseTransitionTimer
 
 func _ready():
-    health.hp_changed.connect(_on_hp_changed)
-    attack_timer.wait_time = attack_cooldown
-
-func _on_hp_changed(new_hp):
-    var hp_percent = float(new_hp) / health.health_max
-    if hp_percent <= 0.5 and current_state == BOSS_STATE.NORMAL:
-        enter_state(BOSS_STATE.RAGE)
-    elif hp_percent <= 0.25 and current_state == BOSS_STATE.RAGE:
-        enter_state(BOSS_STATE.DESPERATE)
-
-func enter_state(new_state):
-    current_state = new_state
-    match new_state:
-        BOSS_STATE.RAGE:
-            $AnimationPlayer.play("rage_start")
-            attack_cooldown = 1.0
-        BOSS_STATE.DESPERATE:
-            $AnimationPlayer.play("desperate_loop")
-            explosion_timer.start()
+    # 设置为Boss类型
+    enemy_type = EnemyType.BOSS
     
-    attack_timer.wait_time = attack_cooldown
+    # 连接信号
+    special_attack_timer.connect("timeout", self, "_on_special_attack_timer_timeout")
+    phase_transition_timer.connect("timeout", self, "_on_phase_transition_timer_timeout")
+    
+    # 初始化攻击模式
+    _setup_attack_patterns()
 
-func _on_AttackTimer_timeout():
-    match current_state:
-        BOSS_STATE.NORMAL:
-            spawn_bullet_fan(8)
-        BOSS_STATE.RAGE:
-            dash_attack()
-        BOSS_STATE.DESPERATE:
-            spawn_circle_bullets(16)
+func _physics_process(delta):
+    if is_dead:
+        return
+    
+    # 处理Boss AI
+    _handle_boss_ai(delta)
+    
+    # 更新动画
+    _update_animation()
+    
+    # 应用移动
+    velocity.y += gravity * delta
+    velocity = move_and_slide(velocity, Vector2.UP)
+    
+    # 检查阶段转换
+    _check_phase_transition()
 
-func spawn_bullet_fan(count):
-    for i in range(count):
-        var bullet = preload("res://src/bullets/BossBullet.tscn").instantiate()
-        bullet.direction = Vector2.RIGHT.rotated(2*PI/count * i)
-        bullet.position = global_position
-        get_parent().add_child(bullet)
-        bullet.set_damage(10)
+# 重写父类的攻击方法
+func _attack():
+    can_attack = false
+    attack_timer.start(attack_cooldown)
+    
+    # 根据当前阶段选择不同的攻击方式
+    match current_phase:
+        BossPhase.PHASE1:
+            _phase1_attack()
+        BossPhase.PHASE2:
+            _phase2_attack()
+        BossPhase.PHASE3:
+            _phase3_attack()
 
-func dash_attack():
-    var target_pos = get_node("/root/Game/Player").global_position
-    var tween = create_tween()
-    tween.tween_property(self, "position", target_pos, 0.3).set_trans(Tween.TRANS_BACK)
-    $DashParticles.emitting = true
-    $Hitbox/CollisionShape2D.disabled = false
-    await tween.finished
-    $Hitbox/CollisionShape2D.disabled = true
+# 重写父类的受伤方法
+func take_damage(amount):
+    if is_dead or ai_state == "phase_transition":
+        return
+    
+    health -= amount
+    
+    # 检查是否需要转换阶段
+    if health <= 0:
+        die()
+    else:
+        # 受伤动画
+        animation_player.play("hit")
+        audio_player.play("hit")
 
-func spawn_circle_bullets(count):
-    for i in range(count):
-        var bullet = preload("res://src/bullets/CircleBullet.tscn").instantiate()
-        bullet.direction = Vector2.RIGHT.rotated(2*PI/count * i)
-        bullet.position = global_position
-        get_parent().add_child(bullet)
-        bullet.set_damage(15)
+# 导入其他Boss功能模块
+func _setup_attack_patterns():
+    # 第一阶段攻击模式
+    attack_patterns.append([
+        "bullet_spray",
+        "jump_attack",
+        "ground_pound"
+    ])
+    
+    # 第二阶段攻击模式
+    attack_patterns.append([
+        "bullet_spray",
+        "homing_missiles",
+        "jump_attack",
+        "ground_pound"
+    ])
+    
+    # 第三阶段攻击模式
+    attack_patterns.append([
+        "bullet_spray",
+        "homing_missiles",
+        "laser_beam",
+        "jump_attack",
+        "ground_pound"
+    ])
+
+# 导入Boss AI处理模块
+func _handle_boss_ai(delta):
+    # 在boss_ai.gd中实现
+    if has_method("_handle_boss_ai_impl"):
+        call("_handle_boss_ai_impl", delta)

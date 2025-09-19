@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/scripts/ui/choice_panel.gd" type="Script" id=1]
+
+[node name="ChoicePanel" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -150.0
+margin_right = 200.0
+margin_bottom = 150.0
+script = ExtResource( 1 )
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -180.0
+margin_top = 20.0
+margin_right = 180.0
+margin_bottom = 50.0
+text = "做出选择"
+align = 1
+valign = 1
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -180.0
+margin_top = -50.0
+margin_right = 180.0
+margin_bottom = 100.0
+custom_constants/separation = 20

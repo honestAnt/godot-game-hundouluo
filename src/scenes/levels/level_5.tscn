@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/scripts/levels/level_boss.gd" type="Script" id=1]
+[ext_resource path="res://src/scenes/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/scenes/boss.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/assets/sprites/backgrounds/boss_arena.tres" type="Texture" id=4]
+[ext_resource path="res://src/assets/tilesets/boss_arena_tileset.tres" type="TileSet" id=5]
+[ext_resource path="res://src/scenes/objects/boss_arena_hazard.tscn" type="PackedScene" id=6]
+
+[node name="Level5" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+centered = false
+position = Vector2( 0, 0 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 64, 64 )
+format = 1
+tile_data = PoolIntArray([...])  # 实际地图数据
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 300, 500 )
+
+[node name="Boss" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1500, 400 )
+
+[node name="Hazards" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+limit_left = 0
+limit_right = 2048
+limit_top = 0
+limit_bottom = 600
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 3.0

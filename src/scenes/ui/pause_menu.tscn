@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/scripts/ui/pause_menu.gd" type="Script" id=1]
+[ext_resource path="res://src/assets/sprites/ui/ui_theme.tres" type="Theme" id=2]
+
+[node name="PauseMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.5 )
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -100.0
+margin_top = 100.0
+margin_right = 100.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 200, 50 )
+text = "游戏暂停"
+align = 1
+valign = 1
+
+[node name="MenuContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -100.0
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 200 )
+custom_constants/separation = 20
+
+[node name="ResumeButton" type="Button" parent="MenuContainer"]
+margin_right = 200.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+text = "继续游戏"
+
+[node name="OptionsButton" type="Button" parent="MenuContainer"]
+margin_top = 60.0
+margin_right = 200.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 40 )
+text = "选项"
+
+[node name="MainMenuButton" type="Button" parent="MenuContainer"]
+margin_top = 120.0
+margin_right = 200.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 0, 40 )
+text = "返回主菜单"
