@@ -1,0 +1,20 @@
+[gd_resource type="Resource" format=3]
+
+[resource]
+branches = {
+    "intro": {
+        "prompt": "成功潜入基地内部，电子门需要破解方式",
+        "options": [
+            {"text": "暴力破解（触发警报）", "next": "hack_force"},
+            {"text": "寻找ID卡（耗时）", "next": "hack_smart"},
+            {"text": "另寻入口（绕路）", "next": "hack_alternate"}
+        ]
+    },
+    "hack_force": {
+        "prompt": "警报：所有安全门将在60秒后锁定！",
+        "options": [
+            {"text": "加速前进", "next": "force_rush"},
+            {"text": "寻找控制室", "next": "find_controls"}
+        ]
+    }
+}

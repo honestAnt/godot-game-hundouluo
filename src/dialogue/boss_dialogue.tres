@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+
+[resource]
+phases = {
+    "phase1": {
+        "enter": "机械守卫：入侵者检测...消灭协议启动！",
+        "50%_hp": "警告：战斗系统超载！",
+        "25%_hp": "紧急：启动自毁序列！"
+    },
+    "phase2": {
+        "pre_fight": "你确定要摧毁核心吗？",
+        "choices": [
+            {"text": "立即摧毁", "result": "instant_ending"},
+            {"text": "尝试破解", "result": "hack_minigame"},
+            {"text": "寻找撤离点", "result": "escape_sequence"}
+        ]
+    }
+}

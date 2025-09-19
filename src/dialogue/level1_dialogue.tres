@@ -1,0 +1,20 @@
+[gd_resource type="Resource" format=3]
+
+[resource]
+branches = {
+    "intro": {
+        "prompt": "无线电：发现前方敌军哨站，请选择行动方案",
+        "options": [
+            {"text": "强攻正门（武器伤害+20%）", "next": "assault"},
+            {"text": "潜入侧翼（移动速度+30%）", "next": "stealth"},
+            {"text": "呼叫空袭（3分钟后触发）", "next": "airstrike"}
+        ]
+    },
+    "assault": {
+        "prompt": "队友：正门有重机枪把守！",
+        "options": [
+            {"text": "使用烟雾弹掩护", "next": "smoke_approach"},
+            {"text": "火箭筒轰开大门", "next": "blast_entry"}
+        ]
+    }
+}
