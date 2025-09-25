@@ -8,22 +8,22 @@ var current_phase = BossPhase.PHASE1
 var phase_health_thresholds = [0.7, 0.4, 0.1]  # 70%, 40%, 10%的血量进入下一阶段
 
 # Boss特殊攻击参数
-export var special_attack_cooldown = 5.0
+@export var special_attack_cooldown = 5.0
 var can_special_attack = true
 var attack_patterns = []
 var current_attack_pattern = 0
 
 # 节点引用
-onready var special_attack_timer = $SpecialAttackTimer
-onready var phase_transition_timer = $PhaseTransitionTimer
+@onready var special_attack_timer = $SpecialAttackTimer
+@onready var phase_transition_timer = $PhaseTransitionTimer
 
 func _ready():
     # 设置为Boss类型
     enemy_type = EnemyType.BOSS
     
     # 连接信号
-    special_attack_timer.connect("timeout", self, "_on_special_attack_timer_timeout")
-    phase_transition_timer.connect("timeout", self, "_on_phase_transition_timer_timeout")
+    special_attack_timer.timeout.connect(_on_special_attack_timer_timeout)
+    phase_transition_timer.timeout.connect(_on_phase_transition_timer_timeout)
     
     # 初始化攻击模式
     _setup_attack_patterns()
@@ -40,7 +40,10 @@ func _physics_process(delta):
     
     # 应用移动
     velocity.y += gravity * delta
-    velocity = move_and_slide(velocity, Vector2.UP)
+    set_velocity(velocity)
+    set_up_direction(Vector2.UP)
+    move_and_slide()
+    velocity = velocity
     
     # 检查阶段转换
     _check_phase_transition()

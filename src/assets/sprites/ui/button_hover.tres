@@ -1,14 +1,16 @@
-[gd_resource type="StyleBoxFlat" format=2]
+[gd_resource type="StyleBoxFlat" load_steps=2 format=2]
 
-[resource]
-bg_color = Color( 0.3, 0.3, 0.3, 1 )
-border_color = Color( 0.7, 0.7, 0.7, 1 )
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color(0.3, 0.3, 0.3)
 border_width_left = 2
 border_width_right = 2
 border_width_top = 2
 border_width_bottom = 2
-corner_detail = 8
-expand_margin_left = 4
-expand_margin_right = 4
-expand_margin_top = 4
-expand_margin_bottom = 4
+border_color = Color(0.7, 0.7, 0.7)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[resource]
+hover = SubResource(1)

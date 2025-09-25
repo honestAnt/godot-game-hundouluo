@@ -4,7 +4,7 @@ extends "res://src/scripts/boss.gd"
 
 func _ready():
     # 确保基类的_ready也被调用
-    ._ready()
+    super._ready()
 
 func _special_attack():
     can_special_attack = false
@@ -40,7 +40,7 @@ func _phase1_attack():
         get_parent().add_child(bullet)
         
         # 短暂延迟
-        yield(get_tree().create_timer(0.1), "timeout")
+        await get_tree().create_timer(0.1).timeout
     
     audio_player.play("shoot")
 
@@ -61,7 +61,7 @@ func _phase2_attack():
         get_parent().add_child(bullet)
         
         # 短暂延迟
-        yield(get_tree().create_timer(0.08), "timeout")
+        await get_tree().create_timer(0.08).timeout
     
     audio_player.play("shoot")
 
@@ -83,7 +83,7 @@ func _phase3_attack():
         get_parent().add_child(bullet)
         
         # 短暂延迟
-        yield(get_tree().create_timer(0.05), "timeout")
+        await get_tree().create_timer(0.05).timeout
     
     audio_player.play("shoot")
 
@@ -107,7 +107,7 @@ func _special_attack_bullet_spray():
         # 添加到场景
         get_parent().add_child(bullet)
     
-    yield(animation_player, "animation_finished")
+    await animation_player.animation_finished
 
 func _special_attack_jump_attack():
     # 跳跃攻击
@@ -120,14 +120,14 @@ func _special_attack_jump_attack():
     velocity.y = -600  # 跳跃力度
     
     # 等待到达最高点
-    yield(get_tree().create_timer(0.5), "timeout")
+    await get_tree().create_timer(0.5).timeout
     
     # 下落时的攻击
     animation_player.play("ground_pound")
     audio_player.play("ground_pound")
     
     # 等待落地
-    yield(get_tree().create_timer(0.5), "timeout")
+    await get_tree().create_timer(0.5).timeout
     
     # 落地冲击波
     _create_shockwave()
@@ -141,13 +141,13 @@ func _special_attack_ground_pound():
     velocity.y = -300
     
     # 等待到达最高点
-    yield(get_tree().create_timer(0.3), "timeout")
+    await get_tree().create_timer(0.3).timeout
     
     # 快速下落
     velocity.y = 1000
     
     # 等待落地
-    yield(get_tree().create_timer(0.3), "timeout")
+    await get_tree().create_timer(0.3).timeout
     
     # 落地冲击波
     _create_shockwave()
@@ -171,7 +171,7 @@ func _special_attack_homing_missiles():
         get_parent().add_child(missile)
         
         # 短暂延迟
-        yield(get_tree().create_timer(0.3), "timeout")
+        await get_tree().create_timer(0.3).timeout
 
 func _special_attack_laser_beam():
     # 激光束攻击
@@ -179,7 +179,7 @@ func _special_attack_laser_beam():
     audio_player.play("laser_charge")
     
     # 充能时间
-    yield(get_tree().create_timer(1.0), "timeout")
+    await get_tree().create_timer(1.0).timeout
     
     # 发射激光
     animation_player.play("laser_fire")
@@ -200,7 +200,7 @@ func _special_attack_laser_beam():
     get_parent().add_child(laser)
     
     # 激光持续时间
-    yield(get_tree().create_timer(2.0), "timeout")
+    await get_tree().create_timer(2.0).timeout
 
 func _create_shockwave():
     # 创建地面冲击波

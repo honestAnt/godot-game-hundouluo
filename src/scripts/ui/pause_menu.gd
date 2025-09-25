@@ -3,9 +3,9 @@ extends Control
 # 暂停菜单脚本
 
 # 节点引用
-onready var resume_button = $MenuContainer/ResumeButton
-onready var options_button = $MenuContainer/OptionsButton
-onready var main_menu_button = $MenuContainer/MainMenuButton
+@onready var resume_button = $MenuContainer/ResumeButton
+@onready var options_button = $MenuContainer/OptionsButton
+@onready var main_menu_button = $MenuContainer/MainMenuButton
 
 # 游戏管理器引用
 var game_manager
@@ -15,9 +15,9 @@ func _ready():
     game_manager = get_node("/root/GameManager")
     
     # 连接按钮信号
-    resume_button.connect("pressed", self, "_on_resume_button_pressed")
-    options_button.connect("pressed", self, "_on_options_button_pressed")
-    main_menu_button.connect("pressed", self, "_on_main_menu_button_pressed")
+    resume_button.pressed.connect(_on_resume_button_pressed)
+    options_button.pressed.connect(_on_options_button_pressed)
+    main_menu_button.pressed.connect(_on_main_menu_button_pressed)
 
 func _on_resume_button_pressed():
     # 播放选择音效

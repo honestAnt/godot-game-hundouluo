@@ -1,34 +1,11 @@
-[gd_resource type="SpriteFrames" format=2]
+[gd_resource type="SpriteFrames" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://src/assets/sprites/bullets/bullet_sprites.png" id="1"]
 
 [resource]
-animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
+animations = [{
+"frames": [ ExtResource("1") ],
 "loop": true,
-"name": "normal",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "enemy",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "laser",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "shotgun",
-"speed": 12.0
-}, {
-"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
-"loop": true,
-"name": "flame",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 15 ), ExtResource( 16 ) ],
-"loop": true,
-"name": "missile",
-"speed": 8.0
-} ]
+"name": "default",
+"speed": 5.0
+}]

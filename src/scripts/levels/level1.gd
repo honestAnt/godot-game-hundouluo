@@ -1,18 +1,30 @@
 extends Node2D
 
+# 获取GameManager单例
+@onready var game_manager = get_node("/root/GameManager")
+
 func _ready():
-    # 初始化玩家
-    var player = preload("res://src/scenes/player.tscn").instantiate()
-    add_child(player)
+    # 检查是否已经有Player节点
+    if not has_node("Player"):
+        # 初始化玩家
+        var player = preload("res://src/scenes/player.tscn").instantiate()
+        player.position = Vector2(100, 300)
+        add_child(player)
     
     # 生成敌人
     for i in range(3):
-        var enemy = preload("res://src/scenes/enemies/enemy_basic.tscn").instantiate()
-        enemy.position = Vector2(randi_range(200, 600), 300)
+        var enemy = preload("res://src/scenes/enemy.tscn").instantiate()
+        enemy.position = Vector2(200 + i * 150, 300)
         add_child(enemy)
     
-    # 连接关卡完成信号
-    LevelSystem.connect("level_completed", _on_level_completed)
+    # 设置关卡完成信号
+    # 使用GameManager而不是LevelSystem
+    if game_manager:
+        # 如果需要，可以在这里连接信号
+        pass
 
-func _on_level_completed():
-    LevelSystem.next_level()
+# 关卡完成时调用
+func complete_level():
+    if game_manager:
+        # 通知GameManager关卡已完成
+        game_manager.emit_signal("level_completed")

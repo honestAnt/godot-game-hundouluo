@@ -3,11 +3,11 @@ extends Control
 # HUD脚本
 
 # 节点引用
-onready var score_label = $TopBar/MarginContainer/HBoxContainer/ScoreLabel
-onready var lives_icons = $TopBar/MarginContainer/HBoxContainer/LivesContainer/LivesIcons
-onready var level_label = $TopBar/MarginContainer/HBoxContainer/LevelLabel
-onready var weapon_icon = $TopBar/MarginContainer/HBoxContainer/WeaponContainer/WeaponIcon
-onready var ammo_label = $TopBar/MarginContainer/HBoxContainer/WeaponContainer/AmmoLabel
+@onready var score_label = $TopBar/MarginContainer/HBoxContainer/ScoreLabel
+@onready var lives_icons = $TopBar/MarginContainer/HBoxContainer/LivesContainer/LivesIcons
+@onready var level_label = $TopBar/MarginContainer/HBoxContainer/LevelLabel
+@onready var weapon_icon = $TopBar/MarginContainer/HBoxContainer/WeaponContainer/WeaponIcon
+@onready var ammo_label = $TopBar/MarginContainer/HBoxContainer/WeaponContainer/AmmoLabel
 
 # 资源引用
 var life_icon_texture = preload("res://src/assets/sprites/ui/life_icon.tres")
@@ -22,7 +22,7 @@ func _ready():
     update_level(1)
     
     # 获取玩家引用
-    yield(get_tree(), "idle_frame")
+    await get_tree().process_frame
     find_player()
 
 func _process(delta):
@@ -48,7 +48,7 @@ func update_lives(lives):
     for i in range(lives):
         var icon = TextureRect.new()
         icon.texture = life_icon_texture
-        icon.rect_min_size = Vector2(20, 20)
+        icon.custom_minimum_size = Vector2(20, 20)
         lives_icons.add_child(icon)
 
 func update_level(level):

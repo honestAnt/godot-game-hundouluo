@@ -6,14 +6,14 @@ extends Node2D
 signal level_completed
 
 # 节点引用
-onready var player = $Player
-onready var enemy_spawner = $EnemySpawner
+@onready var player = $Player
+@onready var enemy_spawner = $EnemySpawner
 
 func _ready():
-    # 初始化关卡
-    pass
+	# 初始化关卡
+	pass
 
 func _process(delta):
-    # 检查关卡是否完成
-    if enemy_spawner.get_child_count() == 0:
-        emit_signal("level_completed")
+	# 检查关卡是否完成
+	if enemy_spawner.get_child_count() == 0:
+		emit_signal("level_completed")

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8yvtdnq3r7gu"]
+
+[ext_resource type="Script" path="res://src/scripts/bullets/missile_bullet.gd" id="1_8jnvx"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yjkm8"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(16, 8)
+
+[node name="MissileBullet" type="CharacterBody2D"]
+script = ExtResource("1_8jnvx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_yjkm8")
+modulate = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("1")

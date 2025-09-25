@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://c8y6tgx2xr3vq"]
 
 [ext_resource type="Script" path="res://src/scripts/levels/level1.gd" id="1_abc12"]
 
@@ -9,4 +9,4 @@ script = ExtResource("1_abc12")
 position = Vector2(100, 300)
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_1")
+format = 2

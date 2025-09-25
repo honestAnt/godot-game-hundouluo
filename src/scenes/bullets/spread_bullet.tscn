@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvnxvnqvnvnxv"]
+
+[ext_resource type="Script" path="res://src/scripts/bullets/spread_bullet.gd" id="1_8jnvx"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yjkm8"]
+size = Vector2(8, 4)
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(8, 4)
+
+[node name="SpreadBullet" type="CharacterBody2D"]
+script = ExtResource("1_8jnvx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_yjkm8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")

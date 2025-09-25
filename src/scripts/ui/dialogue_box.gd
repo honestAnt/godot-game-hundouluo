@@ -7,19 +7,19 @@ var dialogue_lines = []
 var current_line = 0
 var is_typing = false
 
-onready var dialogue_text = $MarginContainer/VBoxContainer/DialogueText
-onready var continue_button = $MarginContainer/VBoxContainer/HBoxContainer/ContinueButton
-onready var animation_player = $MarginContainer/VBoxContainer/DialogueText/AnimationPlayer
+@onready var dialogue_text = $MarginContainer/VBoxContainer/DialogueText
+@onready var continue_button = $MarginContainer/VBoxContainer/HBoxContainer/ContinueButton
+@onready var animation_player = $MarginContainer/VBoxContainer/DialogueText/AnimationPlayer
 
 func _ready():
     # 初始化时隐藏对话框
     visible = false
     
     # 连接按钮信号
-    continue_button.connect("pressed", self, "_on_continue_pressed")
+    continue_button.pressed.connect(_on_continue_pressed)
     
     # 连接动画完成信号
-    animation_player.connect("animation_finished", self, "_on_animation_finished")
+    animation_player.animation_finished.connect(_on_animation_finished)
 
 func show_dialogue(lines):
     # 设置对话内容
@@ -38,7 +38,7 @@ func _show_next_line():
         var line = dialogue_lines[current_line]
         
         # 设置文本内容
-        dialogue_text.bbcode_text = line
+        dialogue_text.text = line
         dialogue_text.percent_visible = 0
         
         # 播放文本显示动画
@@ -72,6 +72,6 @@ func _on_animation_finished(anim_name):
 func _input(event):
     # 按空格键或回车键继续对话
     if visible and event is InputEventKey and event.pressed:
-        if event.scancode == KEY_SPACE or event.scancode == KEY_ENTER:
+        if event.keycode == KEY_SPACE or event.keycode == KEY_ENTER:
             _on_continue_pressed()
             get_tree().set_input_as_handled()

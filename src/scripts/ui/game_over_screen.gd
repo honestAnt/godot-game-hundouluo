@@ -3,9 +3,9 @@ extends Control
 # 游戏结束画面脚本
 
 # 节点引用
-onready var score_label = $ScoreLabel
-onready var retry_button = $MenuContainer/RetryButton
-onready var main_menu_button = $MenuContainer/MainMenuButton
+@onready var score_label = $ScoreLabel
+@onready var retry_button = $MenuContainer/RetryButton
+@onready var main_menu_button = $MenuContainer/MainMenuButton
 
 # 游戏管理器引用
 var game_manager
@@ -15,8 +15,8 @@ func _ready():
     game_manager = get_node("/root/GameManager")
     
     # 连接按钮信号
-    retry_button.connect("pressed", self, "_on_retry_button_pressed")
-    main_menu_button.connect("pressed", self, "_on_main_menu_button_pressed")
+    retry_button.pressed.connect(_on_retry_button_pressed)
+    main_menu_button.pressed.connect(_on_main_menu_button_pressed)
     
     # 更新分数显示
     if game_manager:

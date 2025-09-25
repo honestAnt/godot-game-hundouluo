@@ -1,28 +1,28 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://c8y6tgx2xr3vq"]
 
-[ext_resource path="res://src/scripts/levels/level_base.gd" type="Script" id=1]
-[ext_resource path="res://src/scenes/player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/scenes/enemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/assets/sprites/backgrounds/jungle_background.tres" type="Texture" id=4]
-[ext_resource path="res://src/assets/tilesets/jungle_tileset.tres" type="TileSet" id=5]
-[ext_resource path="res://src/scenes/objects/destructible_block.tscn" type="PackedScene" id=6]
-[ext_resource path="res://src/scenes/objects/moving_platform.tscn" type="PackedScene" id=7]
+[ext_resource type="Script" path="res://src/scripts/levels/level_base.gd" id="1_yjk2p"]
+[ext_resource type="PackedScene" path="res://src/scenes/player.tscn" id="2_m4n3r"]
+[ext_resource type="PackedScene" path="res://src/scenes/enemy.tscn" id="3_k5l2q"]
+[ext_resource type="Texture2D" path="res://src/assets/sprites/backgrounds/jungle_background.tres" id="4_r3s2t"]
+[ext_resource type="TileSet" path="res://src/assets/tilesets/jungle_tileset.tres" id="5_p6n4u"]
+[ext_resource type="PackedScene" path="res://src/scenes/objects/destructible_block.tscn" id="6_v7m5w"]
+[ext_resource type="PackedScene" path="res://src/scenes/objects/moving_platform.tscn" id="7_x8y9z"]
 
 [node name="Level1" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1_yjk2p")
 
 [node name="Background" type="Sprite" parent="."]
-texture = ExtResource( 4 )
+texture = ExtResource("4_r3s2t")
 centered = false
 position = Vector2( 0, 0 )
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 5 )
+tile_set = ExtResource("5_p6n4u")
 cell_size = Vector2( 64, 64 )
 format = 1
-tile_data = PoolIntArray([...])  # 实际地图数据
+layer_0/tile_data = PackedInt32Array([])  # 实际地图数据
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="." instance=ExtResource("2_m4n3r")]
 position = Vector2( 100, 500 )
 
 [node name="EnemySpawner" type="Node" parent="."]

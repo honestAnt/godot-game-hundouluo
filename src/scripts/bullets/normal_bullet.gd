@@ -1,47 +1,18 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
-# 普通子弹脚本
-
-# 子弹参数
-export var speed = 400
-export var damage = 10
-var direction = Vector2.RIGHT
-
-# 节点引用
-onready var hit_area = $HitArea
-onready var life_timer = $LifeTimer
-onready var animated_sprite = $AnimatedSprite
-
-func _ready():
-    # 连接信号
-    hit_area.connect("body_entered", self, "_on_hit_body")
-    life_timer.connect("timeout", self, "_on_lifetime_end")
-    
-    # 启动生命周期计时器
-    life_timer.start()
+@export var speed := 600.0
+@export var damage := 1
+@export var direction := Vector2.RIGHT
 
 func _physics_process(delta):
-    # 移动子弹
-    var collision = move_and_collide(direction * speed * delta)
-    if collision:
-        # 检查碰撞对象
-        if collision.collider.has_method("take_damage"):
-            collision.collider.take_damage(damage)
-        
-        # 销毁子弹
+    velocity = direction * speed
+    move_and_slide()
+    
+    # 检查是否超出屏幕
+    if not get_viewport_rect().has_point(global_position):
         queue_free()
 
-func _on_hit_body(body):
-    # 检查碰撞对象
-    if body.has_method("take_damage"):
+func _on_body_entered(body):
+    if body.is_in_group("enemy"):
         body.take_damage(damage)
-    
-    # 销毁子弹
     queue_free()
-
-func _on_lifetime_end():
-    # 子弹生命周期结束，销毁子弹
-    queue_free()
-
-func set_damage(value):
-    damage = value

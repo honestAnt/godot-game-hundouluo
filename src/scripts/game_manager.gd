@@ -25,14 +25,15 @@ signal score_changed(new_score)
 signal lives_changed(new_lives)
 signal level_changed(new_level)
 signal game_state_changed(new_state)
+signal player_death
 
 func _ready():
     # 初始化游戏
-    pause_mode = Node.PAUSE_MODE_PROCESS  # 游戏管理器在暂停时仍然运行
+    process_mode = Node.PROCESS_MODE_WHEN_PAUSED  # 游戏管理器在暂停时仍然运行
     
     # 连接信号
     if level_manager:
-        level_manager.connect("level_completed", self, "_on_level_completed")
+        level_manager.level_completed.connect(_on_level_completed)
     
     # 显示主菜单
     show_main_menu()
@@ -49,9 +50,9 @@ func start_game():
     current_level = 1
     
     # 更新UI
-    emit_signal("score_changed", score)
-    emit_signal("lives_changed", lives)
-    emit_signal("level_changed", current_level)
+    score_changed.emit(score)
+    lives_changed.emit(lives)
+    level_changed.emit(current_level)
     
     # 加载第一关
     if level_manager:
@@ -118,13 +119,11 @@ func show_main_menu():
 
 func add_score(points):
     score += points
-    emit_signal("score_changed", score)
-
-signal player_death
+    score_changed.emit(score)
 
 func on_player_death():
     lives -= 1
-    emit_signal("lives_changed", lives)
+    lives_changed.emit(lives)
     
     if lives <= 0:
         game_over()
@@ -135,7 +134,7 @@ func on_player_death():
 
 func _on_level_completed():
     current_level += 1
-    emit_signal("level_changed", current_level)
+    level_changed.emit(current_level)
     
     if current_level > max_level:
         # 通关
@@ -147,4 +146,4 @@ func _on_level_completed():
 
 func set_game_state(new_state):
     current_state = new_state
-    emit_signal("game_state_changed", new_state)
+    game_state_changed.emit(new_state)

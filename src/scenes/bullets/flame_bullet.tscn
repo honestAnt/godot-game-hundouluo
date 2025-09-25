@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8yvtdnq3r7gu"]
+
+[ext_resource type="Script" path="res://src/scripts/bullets/flame_bullet.gd" id="1_8jnvx"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yjkm8"]
+size = Vector2(16, 16)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1"]
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 30.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+scale_min = 0.5
+scale_max = 1.5
+color = Color(1, 0.5, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(16, 16)
+
+[node name="FlameBullet" type="CharacterBody2D"]
+script = ExtResource("1_8jnvx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_yjkm8")
+modulate = Color(1, 0.5, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_1")
+amount = 20
+lifetime = 0.5
+emitting = true

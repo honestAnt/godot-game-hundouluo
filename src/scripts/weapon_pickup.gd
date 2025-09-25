@@ -3,7 +3,7 @@ extends Area2D
 # 武器拾取脚本
 
 # 拾取类型
-export(String, "S", "L", "F", "H", "1UP") var pickup_type = "S"
+@export_enum("S", "L", "F", "H", "1UP") var pickup_type = "S"
 
 # 武器名称映射
 var weapon_names = {
@@ -16,7 +16,7 @@ var weapon_names = {
 
 func _ready():
     # 连接信号
-    connect("body_entered", self, "_on_body_entered")
+    body_entered.connect(_on_body_entered)
     
     # 设置动画
     $AnimatedSprite.animation = pickup_type
@@ -51,7 +51,7 @@ func _on_body_entered(body):
                 body.set_weapon(weapon_index)
             else:
                 body.current_weapon_index = weapon_index
-                body.emit_signal("weapon_changed", body.weapons[weapon_index])
+                body.weapon_changed.emit(body.weapons[weapon_index])
         
         # 销毁拾取物
         queue_free()

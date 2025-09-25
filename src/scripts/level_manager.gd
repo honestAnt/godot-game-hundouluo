@@ -35,16 +35,16 @@ func load_level(level_number):
     # 加载新关卡
     var level_scene = load(level_scenes[level_number])
     if level_scene:
-        current_level_node = level_scene.instance()
+        current_level_node = level_scene.instantiate()
         add_child(current_level_node)
         current_level_number = level_number
         
         # 连接关卡信号
         if current_level_node.has_signal("level_completed"):
-            current_level_node.connect("level_completed", self, "_on_level_completed")
+            current_level_node.level_completed.connect(_on_level_completed)
         
         # 发送关卡加载信号
-        emit_signal("level_loaded", level_number)
+        level_loaded.emit(level_number)
     else:
         push_error("无法加载关卡 " + str(level_number) + "!")
 
@@ -55,8 +55,8 @@ func reload_current_level():
 func unload_current_level():
     if current_level_node:
         # 断开信号连接
-        if current_level_node.has_signal("level_completed") and current_level_node.is_connected("level_completed", self, "_on_level_completed"):
-            current_level_node.disconnect("level_completed", self, "_on_level_completed")
+        if current_level_node.has_signal("level_completed") and current_level_node.level_completed.is_connected(_on_level_completed):
+            current_level_node.level_completed.disconnect(_on_level_completed)
         
         # 移除关卡节点
         current_level_node.queue_free()
@@ -64,7 +64,7 @@ func unload_current_level():
 
 func _on_level_completed():
     # 转发信号
-    emit_signal("level_completed")
+    level_completed.emit()
 
 func get_current_level_number():
     return current_level_number

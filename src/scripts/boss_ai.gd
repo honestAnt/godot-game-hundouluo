@@ -4,7 +4,7 @@ extends "res://src/scripts/boss.gd"
 
 func _ready():
     # 确保基类的_ready也被调用
-    ._ready()
+    super._ready()
 
 func _handle_boss_ai_impl(delta):
     match ai_state:

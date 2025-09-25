@@ -18,9 +18,9 @@ func show_choices(title, choices):
     # 添加新选项
     for i in range(choices.size()):
         var choice = choices[i]
-        var button = choice_button_scene.instance()
+        var button = choice_button_scene.instantiate()
         button.text = choice
-        button.connect("pressed", self, "_on_choice_button_pressed", [i])
+        button.pressed.connect(func(): _on_choice_button_pressed(i))
         $ChoicesContainer.add_child(button)
     
     # 显示面板

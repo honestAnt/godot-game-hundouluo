@@ -3,12 +3,12 @@ extends CanvasLayer
 # UI管理器脚本
 
 # 节点引用
-onready var main_menu = $MainMenu
-onready var hud = $HUD
-onready var pause_menu = $PauseMenu
-onready var game_over_screen = $GameOverScreen
-onready var victory_screen = $VictoryScreen
-onready var level_transition = $LevelTransition
+@onready var main_menu = $MainMenu
+@onready var hud = $HUD
+@onready var pause_menu = $PauseMenu
+@onready var game_over_screen = $GameOverScreen
+@onready var victory_screen = $VictoryScreen
+@onready var level_transition = $LevelTransition
 
 # 游戏管理器引用
 var game_manager
@@ -19,10 +19,10 @@ func _ready():
     
     # 连接信号
     if game_manager:
-        game_manager.connect("score_changed", self, "_on_score_changed")
-        game_manager.connect("lives_changed", self, "_on_lives_changed")
-        game_manager.connect("level_changed", self, "_on_level_changed")
-        game_manager.connect("game_state_changed", self, "_on_game_state_changed")
+        game_manager.score_changed.connect(_on_score_changed)
+        game_manager.lives_changed.connect(_on_lives_changed)
+        game_manager.level_changed.connect(_on_level_changed)
+        game_manager.game_state_changed.connect(_on_game_state_changed)
     
     # 初始隐藏所有UI
     hide_all_ui()

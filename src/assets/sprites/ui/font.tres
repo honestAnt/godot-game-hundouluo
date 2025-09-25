@@ -1,9 +1,9 @@
-[gd_resource type="DynamicFont" format=2]
+[gd_resource type="FontFile" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://src/assets/fonts/PressStart2P.ttf" id="1"]
 
 [resource]
-font_data = ExtResource( 1 )
-size = 16
+font_data = ExtResource("1")
+font_size = 16
 outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-
-[ext_resource path="res://src/assets/fonts/default_font.ttf" type="DynamicFontData" id=1]
+outline_color = Color(0, 0, 0, 1)
